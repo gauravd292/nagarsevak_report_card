@@ -1,7 +1,7 @@
 <?php
     require_once('./../_config.php');
 
-    $dirCSV = './../uploads/data-files/csv';
+    $dirCSV = './../uploads/data/csv-master';
 
     // codes
     $filename = $dirCSV . "/Codes.csv";

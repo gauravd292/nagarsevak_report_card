@@ -1,20 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.2
--- http://www.phpmyadmin.net
+-- version 5.1.1
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 22, 2016 at 06:57 PM
--- Server version: 5.7.9
--- PHP Version: 5.6.16
+-- Host: localhost
+-- Generation Time: Jul 30, 2022 at 03:05 PM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `nrc`
@@ -23,44 +18,13 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `attendance`
---
-
-DROP TABLE IF EXISTS `attendance`;
-CREATE TABLE IF NOT EXISTS `attendance` (
-  `Prabhag_No` varchar(3) DEFAULT NULL,
-  `Year` varchar(11) DEFAULT NULL,
-  `Questions` int(3) DEFAULT NULL,
-  `GB_Attendance` int(4) DEFAULT NULL,
-  `GB_Meetings` int(4) DEFAULT NULL,
-  `Atendance_Percentage` float DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `codes`
 --
 
-DROP TABLE IF EXISTS `codes`;
-CREATE TABLE IF NOT EXISTS `codes` (
-  `Work_Type` varchar(100) DEFAULT NULL,
-  `Code` varchar(7) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `csv_data`
---
-
-DROP TABLE IF EXISTS `csv_data`;
-CREATE TABLE IF NOT EXISTS `csv_data` (
-  `Year` varchar(30) DEFAULT NULL,
-  `Details_Of_Work` varchar(100) DEFAULT NULL,
-  `Amount` decimal(15,2) DEFAULT NULL,
-  `Code` varchar(30) DEFAULT NULL,
-  `Prabhag_No` varchar(3) NOT NULL
+CREATE TABLE `codes` (
+  `id` int(11) NOT NULL,
+  `Work_Type` text DEFAULT NULL,
+  `Code` varchar(1000) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -69,34 +33,50 @@ CREATE TABLE IF NOT EXISTS `csv_data` (
 -- Table structure for table `nagarsevak`
 --
 
-DROP TABLE IF EXISTS `nagarsevak`;
-CREATE TABLE IF NOT EXISTS `nagarsevak` (
+CREATE TABLE `nagarsevak` (
+  `id` int(11) NOT NULL,
   `Prabhag_No` varchar(3) DEFAULT NULL,
-  `Nagarsevak_Name` varchar(43) DEFAULT NULL,
+  `Nagarsevak_Name` varchar(200) DEFAULT NULL,
   `Codes` varchar(3) DEFAULT NULL,
   `Url` varchar(48) DEFAULT NULL,
   `Prabhag_Name` varchar(41) DEFAULT NULL,
-  `Ward_ofc` varchar(21) DEFAULT NULL,
-  `Party` varchar(10) DEFAULT NULL,
-  `Total_Questions` int(11) NOT NULL,
-  `Avg_Attendance` float NOT NULL,
-  `Criminal_Records` varchar(10) NOT NULL,
-  `Csv_Link` varchar(100) NOT NULL,
-  `Gender` varchar(10) NOT NULL
+  `Ward_ofc` varchar(100) DEFAULT NULL,
+  `Party` varchar(20) DEFAULT NULL,
+  `Total_Questions` int(11) NOT NULL DEFAULT 0,
+  `Avg_Attendance` float NOT NULL DEFAULT 0,
+  `Criminal_Records` varchar(10) DEFAULT NULL,
+  `Csv_Link` varchar(100) DEFAULT NULL,
+  `Gender` varchar(10) DEFAULT NULL,
+  `Municipal_Committee` varchar(1000) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prabhagname`
+-- Table structure for table `s_list`
 --
 
-DROP TABLE IF EXISTS `prabhagname`;
-CREATE TABLE IF NOT EXISTS `prabhagname` (
-  `Ward_ofc` varchar(22) DEFAULT NULL,
-  `Prabhag_No` int(2) DEFAULT NULL,
-  `Prabhag_Name` varchar(41) DEFAULT NULL
+CREATE TABLE `s_list` (
+  `id` int(11) NOT NULL,
+  `Year` varchar(11) DEFAULT NULL,
+  `Details_Of_Work` text DEFAULT NULL,
+  `Amount` decimal(15,2) DEFAULT NULL,
+  `Code` varchar(1000) DEFAULT NULL,
+  `Prabhag_No` varchar(7) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `visitors`
+--
+
+CREATE TABLE `visitors` (
+  `id` int(11) NOT NULL,
+  `ip_data` varchar(100) NOT NULL,
+  `created_on` timestamp NULL DEFAULT NULL,
+  `updated_on` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -104,10 +84,10 @@ CREATE TABLE IF NOT EXISTS `prabhagname` (
 -- Table structure for table `wardoffice`
 --
 
-DROP TABLE IF EXISTS `wardoffice`;
-CREATE TABLE IF NOT EXISTS `wardoffice` (
+CREATE TABLE `wardoffice` (
+  `id` int(11) NOT NULL,
   `Ward_ofc` varchar(22) DEFAULT NULL,
-  `Prabhag_No` int(3) DEFAULT NULL,
+  `Prabhag_No` int(11) DEFAULT NULL,
   `Prabhag_Name` varchar(41) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -117,15 +97,92 @@ CREATE TABLE IF NOT EXISTS `wardoffice` (
 -- Table structure for table `work_details`
 --
 
-DROP TABLE IF EXISTS `work_details`;
-CREATE TABLE IF NOT EXISTS `work_details` (
+CREATE TABLE `work_details` (
+  `id` int(11) NOT NULL,
   `Year` varchar(11) DEFAULT NULL,
-  `Details_Of_Work` varchar(100) DEFAULT NULL,
+  `Details_Of_Work` text DEFAULT NULL,
   `Amount` decimal(15,2) DEFAULT NULL,
-  `Code` varchar(7) DEFAULT NULL,
+  `Code` varchar(1000) DEFAULT NULL,
   `Prabhag_No` varchar(7) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `codes`
+--
+ALTER TABLE `codes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `nagarsevak`
+--
+ALTER TABLE `nagarsevak`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `s_list`
+--
+ALTER TABLE `s_list`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `visitors`
+--
+ALTER TABLE `visitors`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `wardoffice`
+--
+ALTER TABLE `wardoffice`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `work_details`
+--
+ALTER TABLE `work_details`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `codes`
+--
+ALTER TABLE `codes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `nagarsevak`
+--
+ALTER TABLE `nagarsevak`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `s_list`
+--
+ALTER TABLE `s_list`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `visitors`
+--
+ALTER TABLE `visitors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `wardoffice`
+--
+ALTER TABLE `wardoffice`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `work_details`
+--
+ALTER TABLE `work_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;

@@ -6,7 +6,7 @@ It is an attempt to analyze the Development Work undertaken every year by the Na
 
 See this website live at : [http://nagarsevak.info](http://nagarsevak.info)
 
-##About Project - Nagarsevak Report Card 2021
+##About Project - Nagarsevak Report Card 2022
 
 Nowadays it has become a cliché to bash politicians just for the sake of it. The uninitiated don’t even know what the work is that our corporators really do. So we at Parivartan came up with an idea to investigate how the corporators spend the funds that are allocated to them, which in case of Pune city corporators is 20 lakhs per year per nagarsevak. Though this amount may seem small, but in 5 years it accounts to a staggering Rs 1 crore, an amount sufficient for implementing and executing various good projects successfully. The only question is “do the corporators have the vision and will to utilize the funds and do the citizens think that this vision is aligned with the needs of their own prabhag”?
 
@@ -50,14 +50,14 @@ This project is NOT Copyright protected. You're welcome to fork this project and
 1) Clone the project on your machine.  
 2) Inside the project folder, execute the following commands :  
 cp _config.php.sample _config.php  
-cp includes/email-sender.php.sample includes/email-sender.php  
-cp visitors.txt.sample visitors.txt  
+cp includes/email-sender.php.sample includes/email-sender.php
 3) Update your database details in _config.php  
-4) Create DB with sql_structure/updated_db_structure.sql
-5) Add latest "NRC21 master file.xlsx" in uploads/data-files with name - "NRC21 master file.xlsx"
+4) Create DB with sql_structure/db_structure.sql
+5) Add latest "Parivartan.NRC.2022.Master.File.xlsx" in uploads/data with name - "Parivartan.NRC.2022.Master.File.xlsx"
+5) Add latest "S.List.2022.Master.File.xlsx" in uploads/data with name - "S.List.2022.Master.File.xlsx"
 6) Run follwing scripts in sequence
-    - scripts/convert_excel_to_csv.php
-    - scripts/import_master.php
+    - scripts/convert_to_csv.php
+    - scripts/import_masters.php
     - scripts/import_data.php
-    - scripts/update_codes.php
-Be sure to have Read/Write permission for uploads and uploads/csv folder
+    - scripts/import_s_list.php
+Be sure to have Read/Write permission for uploads, uploads/csv-master and uploads/csv-s-list folder

@@ -17,6 +17,7 @@
 
     mysqli_select_db($con, DATABASE);
 
+    ini_set('display_errors', 1);
     error_reporting(E_ERROR);
 
     $contentBuffer = [];
@@ -46,7 +47,11 @@
         }
         $amount = array_reverse($amount);
         if($amount[0] == ",") $amount[0] = "";
-        $amount = implode("", $amount) . "." . $str_point;
+        $amount = implode("", $amount);
+
+        if($amount)
+            $amount .= "." . str_pad($str_point, '2', '0', STR_PAD_RIGHT);
+            
         return $amount;
     }
 ?>

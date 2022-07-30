@@ -6,7 +6,7 @@
     $function_name = $q;
     call_user_func_array($function_name, array($con));
 
-    function _get_block_config($con, $prabhag_num)
+    function _get_block_config($con, $prabhag_num, $from = "")
     {
         $list = ["A", "B", "C", "D"];
 
@@ -39,6 +39,10 @@
             case 4:
                 $class_name = "col-sm-6 col-md-3 block_4";
                 break;
+        }
+
+        if($from == "details_of_work"){
+            $class_name = str_replace("col-sm-6 col-md-3", "col-sm-12 col-md-6", $class_name);
         }
 
         return ([
@@ -85,6 +89,51 @@
     }
 
     function details_of_work($con)
+    {
+        $prabhag_num = $_POST["i"];
+
+        $config = _get_block_config($con, $prabhag_num, "details_of_work");
+
+        $list = ["A", "B", "C", "D"];
+
+        foreach($list as $lbl)
+        {
+            if(!in_array($lbl, $config["letters"])){
+                continue;
+            }
+
+            $prabhag = $prabhag_num . $lbl;
+
+            $query = "SELECT Prabhag_No, Nagarsevak_Name, Party FROM nagarsevak WHERE Prabhag_No = '" . $prabhag . "'";
+            $result = mysqli_query($con, $query);
+            $person_info = mysqli_fetch_assoc($result);
+
+            $data = [];
+            $data_list = [];
+            $query = "SELECT Year, SUM(Amount) as totalAmount FROM `work_details` WHERE Prabhag_No = '".$prabhag."' GROUP BY Year";
+            $result = mysqli_query($con, $query);
+            if ($result->num_rows > 0) 
+            {
+                while($row = mysqli_fetch_assoc($result)){
+                    $data_list[$row["Year"]]["ward_level"] = $row;
+                }
+            }
+            $query = "SELECT Year, SUM(Amount) as totalAmount FROM `s_list` WHERE Prabhag_No = '".$prabhag."' GROUP BY Year";
+            $result = mysqli_query($con, $query);
+            if ($result->num_rows > 0) 
+            {
+                while($row = mysqli_fetch_assoc($result)){
+                    $data_list[$row["Year"]]["s_list"] = $row;
+                }
+            }
+
+            $data = $data_list;
+
+            include("html/details_of_work.php");
+        }
+    }
+
+    function details_of_work1($con)
     {
         $prabhag_num = $_POST["i"];
 
@@ -138,7 +187,7 @@
             $result = mysqli_query($con, $query);
             $person_info = mysqli_fetch_assoc($result);
 
-            include("html/details_of_work.php");
+            include("html/details_of_work1.php");
         }
     }
 

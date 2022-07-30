@@ -1,7 +1,7 @@
 <?php
     require_once('./../_config.php');
 
-    $dirCSV = './../uploads/data-files/csv';
+    $dirCSV = './../uploads/data/csv-master';
 
     $table = "work_details";
     $query = "TRUNCATE TABLE " . $table;
@@ -17,7 +17,11 @@
                     "Codes.csv", 
                     "Expenses Master.csv", 
                     "Attendance Master.csv", 
-                    "QuestionsAsked Master.csv"
+                    "QuestionsAsked Master.csv",
+                    ".DS_Store",
+                    "Data.Collection.Status.csv",
+                    "Data.Entry.Status.csv",
+                    "Old.Expenses.Master.csv",
                 ])
             )
             {
@@ -43,6 +47,7 @@
         while(!feof($fp))
         {
             $data_row = fgetcsv($fp);
+            if(!$data_row) continue;
 
             $index++;
 

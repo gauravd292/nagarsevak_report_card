@@ -37,17 +37,19 @@
                             // $result = mysqli_query($con, $query);
                             // if ($result->num_rows > 0) {
                             //     while($row = mysqli_fetch_assoc($result)) { // Ward_ofc = '". $row["Ward_ofc"] ."'
-                                    ?> <!-- <optgroup label='<?=$row["Ward_ofc"]; ?>'> --> <?php
-
-                                    $query = "SELECT Prabhag_No, Prabhag_Name FROM wardoffice 
-                                        WHERE 1 ORDER BY Prabhag_No, Prabhag_Name";
+                                    ?> 
+                                    <!-- <optgroup label='<?php // echo $row["Ward_ofc"]; ?>'>  -->
+                                    <?php
+                                    $query = "SELECT Prabhag_No, Prabhag_Name FROM wardoffice WHERE 1 ORDER BY Prabhag_No, Prabhag_Name";
                                     $res = mysqli_query($con, $query);
                                     if ($res->num_rows > 0) {
                                         while($r = mysqli_fetch_assoc($res)) {
-                                            ?> <option value='<?=$r["Prabhag_No"]; ?>'>Prabhag <?=$r["Prabhag_No"]; ?>: <?=$r["Prabhag_Name"]; ?></option> <?php
+                                    //         ?> <option value='<?=$r["Prabhag_No"]; ?>'>Prabhag <?=$r["Prabhag_No"]; ?>: <?=$r["Prabhag_Name"]; ?></option> <?php
                                         }
                                     }
-                                    ?> </optgroup> <?php
+                                    ?> 
+                                    <!-- </optgroup>  -->
+                                    <?php
                             //     }
                             // }
                         ?>
@@ -67,11 +69,11 @@
             </div><br>
 
             <div class="container-fluid animate-box">
-                <div class='text-center'><h2><strong>UTILIZATION OF WARD LEVEL FUNDS</strong></h2></div>
+                <div class='text-center'><h2><strong>UTILIZATION OF FUNDS</strong></h2></div>
                 <div id="details_of_work" class=""></div>
             </div><br>
 
-            <div class="container-fluid">
+            <!-- <div class="container-fluid">
                 <div class="col-md-12 col-sm-12">
                     <div id="downloaded-data" class="text-center animate-box">
                         <div class='text-center'><h2>Download Data</h2></div>
@@ -86,7 +88,7 @@
                             >Original RTI Replies</a>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
