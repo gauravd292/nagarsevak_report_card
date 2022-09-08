@@ -15,10 +15,20 @@
     $data = [];
     $total_amt = "";
 
+    $data_list = [];
+    $query = "SELECT Year, SUM(Amount) as totalAmount FROM s_list WHERE Prabhag_No = '".$prabhag."' GROUP BY Year";
+    $result = mysqli_query($con, $query);
+    if ($result->num_rows > 0) 
+    {
+        while($row = mysqli_fetch_assoc($result)){
+            $data_list[$row["Year"]] = $row;
+        }
+    }
+
     for ($i=0; $i < count($year); $i++) { 
-        $query = "SELECT Year, Details_Of_Work, Code, Amount,
+        $query = "SELECT Year, Details_Of_Work, Code, SUM(Amount) Amount,
             (SELECT Work_Type FROM `codes` as tbl WHERE tbl.Code = s_list.Code) as Work_Type
-        FROM s_list WHERE Prabhag_No = '".$prabhag."' && Year = '".$year[$i]."'";
+        FROM s_list WHERE Prabhag_No = '".$prabhag."' && Year = '".$year[$i]."' GROUP BY Work_Type";
 
         $result = mysqli_query($con, $query);
         if ($result->num_rows > 0) {
@@ -38,12 +48,57 @@
 <div id="fh5co-about" style="padding-top: 50px;">
     <div class="container">
 
-        <?php require_once('_profile.php'); ?>
+        <div class="text-center"><h2><strong>S-List</strong></h2></div><br>
+
+        <div class="row">
+            <div class="col-md-8">
+                <?php require_once('_profile.php'); ?> 
+            </div>
+
+            <div class="col-md-4">
+                <?php
+                    if($data_list){   ?>
+                        <div class="table-responsive">
+                            <table class='table table-bordered table-condensed'>
+                                <thead class="table-odd">
+                                    <tr>
+                                        <th><strong>Year</strong></th>
+                                        <th><strong>Amount (Rs.)</strong></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                    $totalW = 0;
+                                    foreach ($data_list as $yr => $r) {  ?>
+                                        <tr>
+                                            <td><?=$yr; ?> </td>
+                                            <td align="right"><?=moneyFormatIndia($r['totalAmount']); ?></td>
+                                            <?php $totalW += $r['totalAmount']; ?>
+                                        </tr>
+                                <?php
+                                    }   ?>
+                                </tbody>
+                                <tfoot class="table-odd">
+                                    <tr>
+                                        <td><strong>Total Amount</strong></td>
+                                        <td align="right"><strong><?=moneyFormatIndia($totalW); ?></strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                <?php
+                    }
+                    else{   ?>
+                        <div class='text-center'><h3><strong>No data found</strong></h3></div>
+                <?php
+                    }   ?>
+            </div>
+        </div>
         
         <div class="text-center">
-            <br><h2><strong>S-LIST FUNDS - (<?=moneyFormatIndia($total_amt); ?>)</strong></h2><br>
+            <br><h2><strong>S-List Funds - (<?=moneyFormatIndia($total_amt); ?>)</strong></h2><br>
 
-            <div class="btn-group btn-group-lg" role="group">
+            <!-- <div class="btn-group btn-group-lg" role="group">
                 <?php $url = SITE_URL . "details/s_list.php?&p={$prabhag}";  ?>
                 <a href="<?=$url; ?>" class="btn btn-default <?=count($year) > 1 ? 'active' : ''; ?>">ALL</a>
                 <?php
@@ -54,9 +109,9 @@
                         <a href="<?=$url; ?>" class="btn btn-default <?=$y == $_GET["y"] ? 'active' : ''; ?>"><?=$value; ?></a>
                 <?php
                     }   ?>
-            </div>
+            </div> -->
 
-        </div><br>
+        </div>
 
             <?php
                 if($data){ 
@@ -73,8 +128,8 @@
                                             <div class="table-responsive">
                                                 <table class='table table-bordered table-condensed'>
                                                     <colgroup>
-                                                        <col style='width:70%;'>
-                                                        <col style='width:30%;'>
+                                                        <col style='width:80%;'>
+                                                        <col style='width:20%;'>
                                                     </colgroup>
                                                     <thead class="table-odd">
                                                         <tr>
@@ -88,7 +143,7 @@
                                                             
                                                             <tr>
                                                                 <td>
-                                                                    <span class="code" data-toggle="tooltip" data-placement="top" title="<?=$row['Work_Type']; ?>"><?=$row['Code']; ?></span>
+                                                                    <span class="code" data-toggle="tooltip" data-placement="top" title="<?=$row['Code']; ?>"><?=$row['Work_Type']; ?></span>
                                                                 </td>
                                                                 <td align="right"><?=moneyFormatIndia($row['Amount']); ?></td>
                                                                 <?php $total[$yr][] = $row['Amount']; ?>

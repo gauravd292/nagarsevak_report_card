@@ -41,10 +41,6 @@
                 break;
         }
 
-        if($from == "details_of_work"){
-            $class_name = str_replace("col-sm-6 col-md-3", "col-sm-12 col-md-6", $class_name);
-        }
-
         return ([
             "letters" => $letters,
             "count" => count($letters),

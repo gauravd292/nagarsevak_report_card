@@ -48,13 +48,12 @@
                         $result = mysqli_query($con, $query);
                         $cw_row = mysqli_fetch_assoc($result);
                     ?>
-                    <?=$row['Avg_Attendance']; ?> % 
-                    <span style="margin-left:10px;">(City-wide avg is <?=round($cw_row["cw_avg"], 2); ?>)</d>
+                    <?=round($row['Avg_Attendance'] * 100); ?> % 
+                    <span style="margin-left:10px;">(City-wide avg is <?=round($cw_row["cw_avg"] * 100, 2); ?>)</d>
                 </td>
             </tr>
             <tr><td>Served on any Municipal Committee?</td><td><?php echo $row['Municipal_Committee'] ? $row['Municipal_Committee'] : "None"; ?></td></tr>
             <tr><td>Criminal charges filed?</td><td><?php echo "Data not provided by Govt."; // $row['Criminal_Records']; ?></td></tr>
         </table>
     </div>
-    
 </div>

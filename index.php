@@ -69,7 +69,7 @@
             </div><br>
 
             <div class="container-fluid animate-box">
-                <div class='text-center'><h2><strong>UTILIZATION OF FUNDS</strong></h2></div>
+                <div class='text-center'><h2><strong>Aggregated Expenses for 5 Years</strong></h2></div>
                 <div id="details_of_work" class=""></div>
             </div><br>
 
