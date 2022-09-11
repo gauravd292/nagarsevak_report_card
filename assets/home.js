@@ -127,21 +127,32 @@ function showUser(str)
             $("#details_of_work_chart").html("");
 
             let data_list = [];
+            let data_s_list = [];
 
             html = $.parseHTML(response);
 
             $(html).each(function (i, section) {
-                let data_c = $(section).find(".data");
-                $(data_c).attr("id", "data_" + (i + 1));
-                let data = $(data_c).text();
-                data = data.trim();
-                data_list.push(data);
+                let data_ward = $(section).find(".data.ward-level");
+                $(data_ward).attr("id", "data_" + (i + 1));
+                let dataW = $(data_ward).text();
+                dataW = dataW.trim();
+                data_list.push(dataW);
+
+                let data_sList = $(section).find(".data.s-list");
+                $(data_sList).attr("id", "data_" + (i + 1) + "_" + (i + 1));
+                let dataS = $(data_sList).text();
+                dataS = dataS.trim();
+                data_s_list.push(dataS);
+
                 $("#details_of_work_chart").append(section);
             });
 
             $(html).each(function (i, section) {
                 let target = "data_" + (i + 1);
                 draw_chart(data_list[i], target);
+
+                let targetS = "data_" + (i + 1) + "_" + (i + 1);
+                draw_chart(data_s_list[i], targetS);
             });
         });        
     }

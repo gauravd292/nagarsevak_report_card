@@ -66,6 +66,7 @@
             <div class="container-fluid animate-box">
             <div class='text-center'><h2><strong>TOP WORKS</strong></h2></div>
                 <div id="details_of_work_chart" class=""></div>
+                <div id="details_of_s_list_chart" class=""></div>
             </div><br>
 
             <div class="container-fluid animate-box">
@@ -101,7 +102,7 @@
 <script src="<?php echo SITE_URL ?>assets/js/lib/leaflet-omnivore.min.js"></script>
 <script src="<?php echo SITE_URL ?>assets/js/lib/leaflet.label.js"></script>
 <script src="<?php echo SITE_URL ?>assets/js/lib/highcharts.js"></script>
-<script src="<?php echo SITE_URL ?>assets/home.js"></script>
+<script src="<?php echo SITE_URL ?>assets/home.js?_<?mt_rand(); ?>"></script>
 <?php 
     $contentData = ob_get_contents(); 
     ob_end_clean ();

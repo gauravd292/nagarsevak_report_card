@@ -5,7 +5,7 @@
         if($data){   ?>
             <div class='text-left'>
                 <h4>
-                    Ward Level
+                    <strong>Ward Level</strong> 
                     <?php $url = SITE_URL . "details/ward_level.php?p={$prabhag}"; ?>
                     <a href="<?=$url; ?>" target="_self">[Click to see details]</a>
                 </h4>
@@ -51,7 +51,7 @@
         if($data){   ?>
             <div class='text-left'>
                 <h4>
-                    S-List
+                    <strong>S-List</strong>
                     <?php $url = SITE_URL . "details/s_list.php?p={$prabhag}";  ?>
                     <a href="<?=$url; ?>" target="_self">[Click to see details]</a>
                 </h4>
